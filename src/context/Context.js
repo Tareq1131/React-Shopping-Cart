@@ -1,8 +1,8 @@
 
 import { createContext, useContext, useReducer } from "react";
 import faker from "faker";
-import { cartReducer} from "./Reducer";
-
+import { cartReducer, productReducer} from "./Reducer";
+// import {items} from './Data'
 
 const Cart = createContext();
 faker.seed(99);
@@ -23,14 +23,34 @@ function Context ({children}) {
         products: products,
         cart: [],
       });
-
+      const [productState, productDispatch] = useReducer(productReducer, {
+        byStock: false,
+        byFastDelivery: false,
+        byRating: 0,
+        searchQuery: "",
+      });
+    
+      console.log(productState);
 
   return (
-    <Cart.Provider value={{ state, dispatch, }}>
+    <Cart.Provider value={{ state, dispatch,productState, productDispatch }}>
       {children}
     </Cart.Provider>
   )
 }
+
+// function Context  ({ children }) {
+//     const [state, dispatch] = useReducer(cartReducer, {
+//       products: items, // Use the items array as initial products
+//       cart: [],
+//     });
+  
+//     return (
+//       <Cart.Provider value={{ state, dispatch }}>
+//         {children}
+//       </Cart.Provider>
+//     );
+//   };
 export const CartState = () => {
     return useContext(Cart);
   };
