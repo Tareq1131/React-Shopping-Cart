@@ -13,7 +13,7 @@ import {
 import { FaShoppingCart } from "react-icons/fa";
 import { CartState } from "../context/Context";
 
-function Header() {
+const Header = () =>{
   //for add to card
   const {
     state: { cart },
@@ -26,11 +26,19 @@ function Header() {
         <Navbar.Brand>
           <Link to="/">Shoping Cart</Link>
         </Navbar.Brand>
+
         <Navbar.Text className="search">
           <FormControl
             style={{ width: "500" }}
             placeholder="Search here.."
             className="m-auto"
+            aria-label="Search"
+            onChange={(e) => {
+              productDispatch({
+                type: "FILTER_BY_SEARCH",
+                payload: e.target.value,
+              });
+            }}
           ></FormControl>
         </Navbar.Text>
         <Nav>
